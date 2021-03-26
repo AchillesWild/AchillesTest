@@ -1,13 +1,17 @@
 package com.achilles.http.springboot.sentinel;
 
 import com.MyApplicationTests;
-import com.achilles.tool.http.HttpGetUtil;
+import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
+
+import com.achilles.wild.server.tool.http.HttpGetUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class FlowLimitTest extends MyApplicationTests {
@@ -27,7 +31,7 @@ public class FlowLimitTest extends MyApplicationTests {
             final int m=i;
             new Thread(()->{
                 long threadStartTime = System.currentTimeMillis();
-                String result = HttpGetUtil.get(url+m,null);
+                String result = HttpGetUtil.get(url+m,null,null);
                 long duration = System.currentTimeMillis() - threadStartTime;
                 list.add(duration);
                 log.info("-----"+m+"-----result : "+result+",duration : "+duration);
@@ -44,8 +48,15 @@ public class FlowLimitTest extends MyApplicationTests {
     public void flowTest2() throws Exception{
         long threadStartTime = System.currentTimeMillis();
         final int m=23;
-        String result = HttpGetUtil.get(url+m,null);
+        String result = HttpGetUtil.get(url+m,null,getHeaderMap());
         long duration = System.currentTimeMillis() - threadStartTime;
         log.info("-----"+m+"-----result : "+result+",duration : "+duration);
+    }
+
+    private Map<String, Object> getHeaderMap(){
+        String traceId = GenerateUniqueUtil.getTraceId("flow");
+        Map<String, Object> map = new HashMap<>();
+        map.put("traceId",traceId);
+        return map;
     }
 }
