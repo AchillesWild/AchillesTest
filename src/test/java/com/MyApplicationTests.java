@@ -10,6 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(classes = {MyApplication.class})
 public class MyApplicationTests {
 
-
+    public final String urlPrefix = "http://localhost:8080/achilles/";
 
 }

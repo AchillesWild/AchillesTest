@@ -19,13 +19,14 @@ public class FlowLimitTest extends ThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(FlowLimitTest.class);
 
-    String url = "http://localhost:8080/achilles/flow/2";
+//    String url = urlPrefix+"flow/fallback/2";
+    String url = urlPrefix+"flow/block/2";
 
     @Test
     public void flowTest() throws Exception{
 
         final List<Long> list = new ArrayList<>();
-        int max = 11;
+        int max = 43;
         CountDownLatch count = new CountDownLatch(max);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < max; i++) {
@@ -47,11 +48,25 @@ public class FlowLimitTest extends ThreadTest {
 
     @Test
     public void flowTest2() throws Exception{
-        long threadStartTime = System.currentTimeMillis();
-        final int m=23;
-        String result = HttpGetUtil.get(url+m,null,getHeaderMap());
-        long duration = System.currentTimeMillis() - threadStartTime;
-        log.info("-----"+m+"-----result : "+result+",duration : "+duration);
+        final List<Long> list = new ArrayList<>();
+        int max = 1;
+        CountDownLatch count = new CountDownLatch(max);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < max; i++) {
+            final int m=i;
+            executor.submit(()->{
+                long threadStartTime = System.currentTimeMillis();
+                String result = HttpGetUtil.get(url,null,getHeaderMap());
+                long duration = System.currentTimeMillis() - threadStartTime;
+                list.add(duration);
+                log.info("-----"+m+"-----result : "+result+" | duration : "+duration);
+                count.countDown();
+            });
+        }
+        count.await();
+        long duration = System.currentTimeMillis() - startTime;
+        log.info("---------------------------------total duration : "+duration);
+        log.info("-----------------over------------each duration : "+list);
     }
 
     private Map<String, Object> getHeaderMap(){
