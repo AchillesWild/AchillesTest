@@ -1,6 +1,7 @@
 package com.achilles.http.springboot.sentinel;
 
 import com.MyApplicationTests;
+import com.ThreadTest;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 
 import com.achilles.wild.server.tool.http.HttpGetUtil;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class FlowLimitTest extends MyApplicationTests {
+public class FlowLimitTest extends ThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(FlowLimitTest.class);
 
@@ -24,19 +25,19 @@ public class FlowLimitTest extends MyApplicationTests {
     public void flowTest() throws Exception{
 
         final List<Long> list = new ArrayList<>();
-        int max = 1;
+        int max = 10;
         CountDownLatch count = new CountDownLatch(max);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < max; i++) {
             final int m=i;
-            new Thread(()->{
+            executor.submit(()->{
                 long threadStartTime = System.currentTimeMillis();
-                String result = HttpGetUtil.get(url+m,null,null);
+                String result = HttpGetUtil.get(url+m,null,getHeaderMap());
                 long duration = System.currentTimeMillis() - threadStartTime;
                 list.add(duration);
                 log.info("-----"+m+"-----result : "+result+",duration : "+duration);
                 count.countDown();
-            }).start();
+            });
         }
         count.await();
         long duration = System.currentTimeMillis() - startTime;
