@@ -19,14 +19,14 @@ public class FlowLimitTest extends ThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(FlowLimitTest.class);
 
-    String url = urlPrefix+"flow/fallback/2";
-//    String url = urlPrefix+"flow/block/2";
+//    String url = urlPrefix+"flow/fallback/2m";
+    String url = urlPrefix+"flow/block/2m";
 
     @Test
     public void flowTest() throws Exception{
 
         final List<Long> list = new ArrayList<>();
-        int max = 5;
+        int max = 3;
         CountDownLatch count = new CountDownLatch(max);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < max; i++) {
