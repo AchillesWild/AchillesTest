@@ -35,7 +35,7 @@ public class FlowLimitTest extends ThreadTest {
                 String result = HttpGetUtil.get(url+m,null,getHeaderMap());
                 long duration = System.currentTimeMillis() - threadStartTime;
                 list.add(duration);
-                log.info("-----"+m+"-----result : "+result+",duration : "+duration);
+                log.info("-----"+m+"-----result : "+result+" , duration : "+duration);
                 count.countDown();
             });
         }
