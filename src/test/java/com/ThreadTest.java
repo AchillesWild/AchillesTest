@@ -14,6 +14,6 @@ public class ThreadTest extends MyApplicationTests{
      任务拒绝策略
      当线程池的任务缓存队列已满并且线程池中的线程数目达到maximumPoolSize，如果还有任务到来就会采取任务拒绝策略
      ThreadPoolExecutor.CallerRunsPolicy;//由调用线程处理该任务*/
-    public ExecutorService executor = new ThreadPoolExecutor( 5, 10, 10, TimeUnit.SECONDS,
+    public ExecutorService executor = new ThreadPoolExecutor( 5, 100, 10, TimeUnit.SECONDS,
             new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
 }

@@ -19,20 +19,20 @@ public class FlowLimitTest extends ThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(FlowLimitTest.class);
 
-    String url = "http://localhost:8080/achilles/flow/";
+    String url = "http://localhost:8080/achilles/flow/2";
 
     @Test
     public void flowTest() throws Exception{
 
         final List<Long> list = new ArrayList<>();
-        int max = 5;
+        int max = 11;
         CountDownLatch count = new CountDownLatch(max);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < max; i++) {
             final int m=i;
             executor.submit(()->{
                 long threadStartTime = System.currentTimeMillis();
-                String result = HttpGetUtil.get(url+m,null,getHeaderMap());
+                String result = HttpGetUtil.get(url,null,getHeaderMap());
                 long duration = System.currentTimeMillis() - threadStartTime;
                 list.add(duration);
                 log.info("-----"+m+"-----result : "+result+" | duration : "+duration);
