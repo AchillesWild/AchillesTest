@@ -10,7 +10,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 public class HttpGetUtil {
@@ -54,15 +54,35 @@ public class HttpGetUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String str = null;
+		log.debug("code : " + statusCode);
+
+		InputStream inputStream = null;
 		try {
-			str = getMethod.getResponseBodyAsString();
+			inputStream = getMethod.getResponseBodyAsStream();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
-			getMethod.releaseConnection();
+			return null;
 		}
-		log.debug("Code : " + statusCode);
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+		String readLine = "";
+		StringBuffer sb = new StringBuffer();
+		try {
+			while ((readLine = br.readLine()) != null){
+				sb.append(readLine);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		getMethod.releaseConnection();
+
+		String str = sb.toString();
 		log.debug("result : "+str);
 		return str;
 	}
