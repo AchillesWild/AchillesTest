@@ -19,8 +19,8 @@ public class FlowLimitTest extends ThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(FlowLimitTest.class);
 
-//    String url = urlPrefix+"flow/fallback/2m";
-    String url = urlPrefix+"flow/block/2m";
+    String url = urlPrefix+"flow/fallback/2";
+//    String url = urlPrefix+"flow/block/2m";
 
     @Test
     public void flowTest() throws Exception{
