@@ -26,7 +26,7 @@ public class FlowLimitTest extends ThreadTest {
     public void flowTest() throws Exception{
 
         final List<Long> list = new ArrayList<>();
-        int max = 3;
+        int max = 1;
         CountDownLatch count = new CountDownLatch(max);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < max; i++) {
