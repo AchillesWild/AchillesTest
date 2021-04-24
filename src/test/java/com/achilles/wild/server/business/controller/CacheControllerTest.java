@@ -31,7 +31,7 @@ public class CacheControllerTest extends ThreadTest {
             final int m=i;
             executor.submit(()->{
                 long threadStartTime = System.currentTimeMillis();
-                String result = HttpGetUtil.get(url,null,getHeaderMap());
+                String result = HttpGetUtil.get(url,null,getHeaderMap("redisson"));
                 long duration = System.currentTimeMillis() - threadStartTime;
                 list.add(duration);
                 log.info("-----"+m+"-----result : "+result+" | duration : "+duration);
@@ -44,10 +44,5 @@ public class CacheControllerTest extends ThreadTest {
         log.info("-----------------over------------each duration : "+list);
     }
 
-    private Map<String, Object> getHeaderMap(){
-        String traceId = GenerateUniqueUtil.getTraceId("redisson");
-        Map<String, Object> map = new HashMap<>();
-        map.put("traceId",traceId);
-        return map;
-    }
+
 }
