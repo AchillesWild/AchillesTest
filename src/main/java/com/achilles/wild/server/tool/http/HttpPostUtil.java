@@ -1,4 +1,4 @@
-package com.achilles.tool.http;
+package com.achilles.wild.server.tool.http;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.httpclient.HttpClient;
