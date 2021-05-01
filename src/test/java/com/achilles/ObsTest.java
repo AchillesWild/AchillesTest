@@ -21,7 +21,7 @@ public class ObsTest {
     @Test
     public void upload() throws Exception{
         String path = "C:\\Users\\Achilles\\Desktop\\z.jpg";
-        FileInputStream inputStream = new FileInputStream(new File(path));
+        FileInputStream inputStream = new FileInputStream(path);
         PutObjectResult result = obsClient.putObject(bucketname, key,inputStream);
         System.out.println();
     }
