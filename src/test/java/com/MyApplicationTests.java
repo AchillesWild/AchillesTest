@@ -4,7 +4,6 @@ import com.achilles.MyApplication;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import java.util.Map;
 @SpringBootTest(classes = {MyApplication.class})
 public class MyApplicationTests {
 
-    public final String urlPrefix = "http://127.0.0.1:8080/achilles/";
+    public final String urlPrefix = "http://127.0.0.1:8080/achilles";
 
     public Map<String, Object> getHeaderMap(String keyWords){
         String traceId = GenerateUniqueUtil.getTraceId(keyWords);
