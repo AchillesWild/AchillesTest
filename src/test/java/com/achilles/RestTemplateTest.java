@@ -1,6 +1,7 @@
 package com.achilles;
 
 import com.MyApplicationTests;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -20,15 +21,15 @@ public class RestTemplateTest extends MyApplicationTests {
 
     @Test
     public void test3(){
-        MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
-        paramMap.add("id", "20190225");
-
-
-//        String result = restTemplate.postForObject(url, paramMap, String.class);
+        BaseRequest baseRequest =new BaseRequest();
+        baseRequest.setId("asda");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("header131","headerva131");
-        HttpEntity<Map> httpEntity = new HttpEntity<>(paramMap,headers);
+        HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSON(baseRequest).toString(), headers);
+
+//        String result = restTemplate.postForObject(url, paramMap, String.class);
+
         ResponseEntity<BaseRequest> response2 = restTemplate.postForEntity(url, httpEntity, BaseRequest.class);
         BaseRequest baseRequest2 = response2.getBody();
 
