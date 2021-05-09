@@ -74,8 +74,6 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
         FileSystemResource file = new FileSystemResource(path);
         params.add("file", file);
         HttpHeaders headers = new HttpHeaders();
-        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8;multipart/form-data");
-        headers.setContentType(type);
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.add("header131","header-value");
         HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(params, headers);
