@@ -1,88 +1,73 @@
 package com.achilles;
 
-import com.MyApplicationTests;
+import com.ConstantService;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+public class RestTemplateTest implements RestTemplateBaseService, ConstantService {
 
-public class RestTemplateTest extends MyApplicationTests {
-
-    @Autowired
-    RestTemplate restTemplate;
 
     String url = urlPrefix+"/demo/check";
+    String imageUrl = urlPrefix+"/image/upload";
 
     @Test
-    public void test3(){
+    public void exchangeTest(){
         BaseRequest baseRequest =new BaseRequest();
         baseRequest.setId("asda");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("header131","headerva131");
         HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSON(baseRequest).toString(), headers);
-
-//        String result = restTemplate.postForObject(url, paramMap, String.class);
-
-        ResponseEntity<BaseRequest> response2 = restTemplate.postForEntity(url, httpEntity, BaseRequest.class);
-        BaseRequest baseRequest2 = response2.getBody();
-
-        ResponseEntity<BaseRequest> response3 = restTemplate.exchange(url, HttpMethod.POST, httpEntity, BaseRequest.class);
-        BaseRequest baseRequest3 = response3.getBody();
+        ResponseEntity<BaseRequest> response = getRestTemplate().exchange(url, HttpMethod.POST, httpEntity, BaseRequest.class);
+        BaseRequest baseRequest1 = response.getBody();
 
         System.out.println();
     }
 
 
     @Test
-    public void test2(){
-        Map<String, Map> paramMap = new HashMap<>();
-        Map<String, String> baseRequestMap = new HashMap<>();
-        baseRequestMap.put("id","3345");
-        paramMap.put("request", baseRequestMap);
-
-//        String result = restTemplate.postForObject(url, paramMap, String.class);
+    public void postForEntityTest(){
+        BaseRequest baseRequest =new BaseRequest();
+        baseRequest.setId("asda");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("header131","headerva131");
-        HttpEntity<Map<String, Map>> httpEntity = new HttpEntity<>(paramMap,headers);
-        ResponseEntity<BaseRequest> response2 = restTemplate.postForEntity(url, httpEntity, BaseRequest.class);
-        BaseRequest baseRequest2 = response2.getBody();
-
-        ResponseEntity<BaseRequest> response3 = restTemplate.exchange(url, HttpMethod.POST, httpEntity, BaseRequest.class);
-        BaseRequest baseRequest3 = response3.getBody();
+        headers.add("header131","header-value");
+        HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSON(baseRequest).toString(), headers);
+        ResponseEntity<BaseRequest> response = getRestTemplate().postForEntity(url, httpEntity, BaseRequest.class);
+        BaseRequest baseRequest1 = response.getBody();
 
         System.out.println();
     }
 
     @Test
-    public void test1(){
-        MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
-        paramMap.add("id", "20190225");
-
-//        String result = restTemplate.postForObject(url, paramMap, String.class);
-
+    public void postForEntityFileTest() throws Exception{
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        String path = "C:\\Users\\Achilles\\Desktop\\test1.jpg";
+        FileSystemResource file = new FileSystemResource(path);
+        params.add("deviceId", "123424");
+        params.add("file", file);
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("header131","headerva131");
-        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(paramMap,headers);
-        ResponseEntity<String> response2 = restTemplate.postForEntity(url, httpEntity, String.class);
-
-        ResponseEntity<String> response3 = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.add("header131","header-value");
+        HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(params, headers);
+        ResponseEntity<String> response = getRestTemplate().postForEntity(imageUrl, httpEntity, String.class);
+        String baseRequest1 = response.getBody();
 
         System.out.println();
     }
 
     @Test
-    public void test(){
-        ResponseEntity<String> response = restTemplate.postForEntity(null,null,String.class);
-//        response.getHeaders()
-
+    public void postForObjectTest(){
+        BaseRequest baseRequest =new BaseRequest();
+        baseRequest.setId("asda");
+        BaseRequest result = getRestTemplate().postForObject(url, baseRequest, BaseRequest.class);
+        System.out.println();
     }
+
+
+
 }
