@@ -1,6 +1,8 @@
 package com.achilles;
 
 import com.ConstantService;
+import com.RestTemplateBaseService;
+import com.achilles.wild.server.model.BaseRequest;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
@@ -17,10 +19,10 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
     @Test
     public void exchangeTest(){
         BaseRequest baseRequest =new BaseRequest();
-        baseRequest.setId("asda");
+        baseRequest.setId("AchillesWild");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("header131","headerva131");
+        headers.add("header131","AchillesWild");
         HttpEntity<String> httpEntity = new HttpEntity<String>(JSONObject.toJSON(baseRequest).toString(), headers);
         ResponseEntity<BaseRequest> response = getRestTemplate().exchange(url, HttpMethod.POST, httpEntity, BaseRequest.class);
         BaseRequest baseRequest1 = response.getBody();
@@ -32,7 +34,7 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
     @Test
     public void postForEntityTest(){
         BaseRequest baseRequest =new BaseRequest();
-        baseRequest.setId("asda");
+        baseRequest.setId("AchillesWild");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("header131","header-value");
@@ -63,7 +65,7 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
     @Test
     public void postForObjectTest(){
         BaseRequest baseRequest =new BaseRequest();
-        baseRequest.setId("asda");
+        baseRequest.setId("AchillesWild");
         BaseRequest result = getRestTemplate().postForObject(url, baseRequest, BaseRequest.class);
         System.out.println();
     }

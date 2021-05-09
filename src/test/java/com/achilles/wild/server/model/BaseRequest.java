@@ -1,4 +1,4 @@
-package com.achilles;
+package com.achilles.wild.server.model;
 
 import java.io.Serializable;
 

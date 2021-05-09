@@ -1,4 +1,4 @@
-package com.achilles;
+package com;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;

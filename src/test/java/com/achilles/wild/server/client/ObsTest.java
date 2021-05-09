@@ -1,4 +1,4 @@
-package com.achilles;
+package com.achilles.wild.server.client;
 
 import com.obs.services.ObsClient;
 import com.obs.services.model.*;

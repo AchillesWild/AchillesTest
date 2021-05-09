@@ -1,6 +1,5 @@
-package com.achilles;
+package com.achilles.wild.server.client;
 
-import com.obs.services.model.PutObjectResult;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
