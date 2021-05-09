@@ -15,6 +15,7 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
 
     String url = urlPrefix+"/demo/check";
     String imageUrl = urlPrefix+"/image/upload";
+    String imageUrl2 = urlPrefix+"/image/upload2";
 
     @Test
     public void exchangeTest(){
@@ -48,9 +49,9 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
     @Test
     public void postForEntityFileTest() throws Exception{
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("deviceId", "123424");
         String path = "C:\\Users\\Achilles\\Desktop\\test1.jpg";
         FileSystemResource file = new FileSystemResource(path);
-        params.add("deviceId", "123424");
         params.add("file", file);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -58,6 +59,28 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
         HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(params, headers);
         ResponseEntity<String> response = getRestTemplate().postForEntity(imageUrl, httpEntity, String.class);
         String baseRequest1 = response.getBody();
+
+        System.out.println();
+    }
+
+    @Test
+    public void postForEntityFileTest2() throws Exception{
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("name", "Wild");
+//        BaseRequest baseRequest =new BaseRequest();
+//        baseRequest.setId("AchillesWild");
+//        params.add("baseRequest", baseRequest);
+        String path = "C:\\Users\\Achilles\\Desktop\\test1.jpg";
+        FileSystemResource file = new FileSystemResource(path);
+        params.add("file", file);
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8;multipart/form-data");
+        headers.setContentType(type);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.add("header131","header-value");
+        HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(params, headers);
+        ResponseEntity<String> response = getRestTemplate().postForEntity(imageUrl2, httpEntity, String.class);
+        String responseBody = response.getBody();
 
         System.out.println();
     }
