@@ -10,6 +10,9 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RestTemplateTest implements RestTemplateBaseService, ConstantService {
 
 
@@ -66,15 +69,18 @@ public class RestTemplateTest implements RestTemplateBaseService, ConstantServic
     @Test
     public void postForEntityFileTest2() throws Exception{
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("name", "Wild");
-//        BaseRequest baseRequest =new BaseRequest();
-//        baseRequest.setId("AchillesWild");
-//        params.add("baseRequest", baseRequest);
+        BaseRequest baseRequest =new BaseRequest();
+        baseRequest.setId("AchillesWild");
+        params.add("baseRequest", baseRequest);
+        Map<String,String> map = new HashMap<>();
+        map.put("key1","value11");
+        params.add("map", map);
         String path = "C:\\Users\\Achilles\\Desktop\\test1.jpg";
         FileSystemResource file = new FileSystemResource(path);
         params.add("file", file);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+//        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("header131","header-value");
         HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(params, headers);
         ResponseEntity<String> response = getRestTemplate().postForEntity(imageUrl2, httpEntity, String.class);

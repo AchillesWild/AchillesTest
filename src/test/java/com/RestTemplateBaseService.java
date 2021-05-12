@@ -9,8 +9,8 @@ public interface RestTemplateBaseService {
     default RestTemplate getRestTemplate(){
 
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setReadTimeout(5000);
-        factory.setConnectTimeout(5000);
+        factory.setReadTimeout(30000);
+        factory.setConnectTimeout(30000);
         RestTemplate restTemplate = new RestTemplate(factory);
 
         return restTemplate;
