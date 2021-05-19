@@ -15,7 +15,7 @@ public class MultiThreadTest {
     private final static Logger log = LoggerFactory.getLogger(MultiThreadTest.class);
 
     public ExecutorService executor = new ThreadPoolExecutor( 100, 100, 10, TimeUnit.SECONDS,
-            new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+            new LinkedBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
 
     @Test
     public void hashMapTest2() throws Exception{
@@ -34,6 +34,7 @@ public class MultiThreadTest {
             executor.submit(()->{
                 Stopwatch stopwatch = Stopwatch.createStarted();
                 String result = map.get(key);
+//                System.out.println(result);
                 long duration = stopwatch.elapsed(TimeUnit.MICROSECONDS);
                 list.add(duration);
                 count.countDown();
