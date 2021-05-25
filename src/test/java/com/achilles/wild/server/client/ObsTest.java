@@ -20,7 +20,7 @@ public class ObsTest {
 
     @Test
     public void upload() throws Exception{
-        String path = "C:\\Users\\Achilles\\Desktop\\z.jpg";
+        String path = "C:\\Users\\Achilles\\Desktop\\photo\\619.jpg";
         FileInputStream inputStream = new FileInputStream(path);
         PutObjectResult result = obsClient.putObject(bucketname, key,inputStream);
         System.out.println();
@@ -41,9 +41,9 @@ public class ObsTest {
         // 创建ObsClient实例
         ObsClient obsClient = new ObsClient(ak, sk, endPoint);
         // 替换您的过期时间，单位是秒
-        long expireSeconds = 300L;
+        long expireSeconds = 30000L;
 
-        // 替换成您对应的操作
+        // 替换成您对应的操
         TemporarySignatureRequest request = new TemporarySignatureRequest(HttpMethodEnum.GET, expireSeconds);
 
         // 替换为请求本次操作访问的桶名和对象名
