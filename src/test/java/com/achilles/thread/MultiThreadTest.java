@@ -14,7 +14,7 @@ public class MultiThreadTest {
 
     private final static Logger log = LoggerFactory.getLogger(MultiThreadTest.class);
 
-    public ExecutorService executor = new ThreadPoolExecutor( 100, 100, 10, TimeUnit.SECONDS,
+    public ExecutorService executor = new ThreadPoolExecutor( 100, 200, 10, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
 
     @Test
