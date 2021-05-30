@@ -14,7 +14,7 @@ import java.util.Map;
 @SpringBootTest(classes = {MyTestApplication.class})
 public class MyTestApplicationTests {
 
-    public final String urlPrefix = "http://127.0.0.1:8080/achilles";
+    public final String urlPrefix = "http://127.0.0.1:8080/AchillesWild";
 
     public Map<String, Object> getHeaderMap(String keyWords){
         String traceId = GenerateUniqueUtil.getTraceId(keyWords);

@@ -2,7 +2,7 @@ package com.achilles;
 
 import com.ConstantService;
 import com.RestTemplateBaseService;
-import com.achilles.wild.server.model.BaseRequest;
+import com.achilles.wild.server.model.request.BaseRequest;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;

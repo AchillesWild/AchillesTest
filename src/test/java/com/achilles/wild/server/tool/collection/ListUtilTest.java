@@ -110,13 +110,13 @@ public class ListUtilTest {
      * ???????
      * @return
      */
-    private static List<CitizenDetail> getCitizenDetail(List<Citizen> citizenList){
-        List<CitizenDetail>  citizenDetailList =citizenList.stream().map(var->{
-            CitizenDetail citizenDetail = new CitizenDetail();
-            citizenDetail.setId(var.getId());
-            return citizenDetail;
+    private static List<Citizen> getCitizens(List<Citizen> citizenList){
+        List<Citizen>  citizens =citizenList.stream().map(var->{
+            Citizen citizen2 = new Citizen();
+            citizen2.setId(var.getId());
+            return citizen2;
         }).collect(Collectors.toList());
-        return citizenDetailList;
+        return citizens;
     }
 
     private static List<Citizen> getCitizenSetVal(){
