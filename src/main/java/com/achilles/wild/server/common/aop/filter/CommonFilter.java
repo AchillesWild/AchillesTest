@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.util.Date;
 
 
-@WebFilter(filterName = "initFilter", urlPatterns = "/*" , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
-public class InitFilter implements Filter {
+@WebFilter(urlPatterns = "/*" , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
+public class CommonFilter implements Filter {
 
-    private final static Logger log = LoggerFactory.getLogger(InitFilter.class);
+    private final static Logger log = LoggerFactory.getLogger(CommonFilter.class);
 
     private String loginUri;
 
-    @Value("${if.verify.trace.id:false}")
+    @Value("${if.verify.trace.id:true}")
     Boolean verifyTraceId;
 
     private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
