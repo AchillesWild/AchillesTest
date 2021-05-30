@@ -1,8 +1,6 @@
 package com.achilles.wild.server.business.service;
 
-import com.MyApplicationTests;
-import com.achilles.MyApplication;
-import com.achilles.http.springboot.sentinel.FlowLimitTest;
+import com.MyTestApplicationTests;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -12,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeignTest extends MyApplicationTests {
+public class FeignTest extends MyTestApplicationTests {
 
     private final static Logger log = LoggerFactory.getLogger(FeignTest.class);
 

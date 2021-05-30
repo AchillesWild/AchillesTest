@@ -2,7 +2,7 @@ package com;
 
 import java.util.concurrent.*;
 
-public class ThreadTest extends MyApplicationTests{
+public class ThreadTest extends MyTestApplicationTests {
 
             /*    任务缓存队列及排队策略
         synchronousQueue：直接提交。直接提交策略表示线程池不对任务进行缓存。新进任务直接提交给线程池，当线程池中没有空闲线程时，创建一个新的线程处理此任务。这种策略需要线程池具有无限增长的可能性。*/

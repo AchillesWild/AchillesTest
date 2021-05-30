@@ -11,13 +11,13 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableFeignClients
 @ServletComponentScan
 @EnableAsync
-public class MyApplication {
+public class MyTestApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(MyApplication.class, args);
+		SpringApplication.run(MyTestApplication.class, args);
 
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SUCCESS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SUCCESS ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 
 }

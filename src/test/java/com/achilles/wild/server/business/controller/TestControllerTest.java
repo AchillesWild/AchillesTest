@@ -1,6 +1,6 @@
 package com.achilles.wild.server.business.controller;
 
-import com.MyApplicationTests;
+import com.MyTestApplicationTests;
 import com.achilles.wild.server.tool.http.HttpGetUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 
-public class TestControllerTest extends MyApplicationTests {
+public class TestControllerTest extends MyTestApplicationTests {
 
     private final static Logger log = LoggerFactory.getLogger(TestControllerTest.class);
 

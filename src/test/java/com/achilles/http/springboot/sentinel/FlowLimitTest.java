@@ -1,6 +1,5 @@
 package com.achilles.http.springboot.sentinel;
 
-import com.MyApplicationTests;
 import com.ThreadTest;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 

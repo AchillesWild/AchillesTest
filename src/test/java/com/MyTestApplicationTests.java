@@ -1,6 +1,6 @@
 package com;
 
-import com.achilles.MyApplication;
+import com.achilles.MyTestApplication;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +11,8 @@ import java.util.Map;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {MyApplication.class})
-public class MyApplicationTests {
+@SpringBootTest(classes = {MyTestApplication.class})
+public class MyTestApplicationTests {
 
     public final String urlPrefix = "http://127.0.0.1:8080/achilles";
 
