@@ -1,8 +1,7 @@
 package com.achilles.wild.server.business.controller.demo;
 
 import com.achilles.wild.server.common.aop.limit.annotation.CommonQpsLimit;
-import com.achilles.wild.server.common.aop.log.annotation.IgnoreParams;
-import com.achilles.wild.server.model.request.BaseRequest;
+import com.achilles.wild.server.common.listener.event.MyApplicationEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,26 +39,6 @@ public class DemoController {
         return "Everything is fine !";
     }
 
-    @PostMapping(path = "/check1")
-    @IgnoreParams
-    public BaseRequest check1(@RequestBody BaseRequest request,HttpServletResponse httpServletResponse){
-
-        String header = httpServletRequest.getHeader("header131");
-        httpServletResponse.setHeader("header2222","headerva3333");
-        return request;
-    }
-
-
-    @PostMapping(path = "/check")
-    @IgnoreParams
-    public BaseRequest check(@RequestBody BaseRequest request,HttpServletResponse httpServletResponse){
-
-        String header = httpServletRequest.getHeader("header131");
-        httpServletResponse.setHeader("header2222","AchillesWild");
-        return request;
-    }
-
-
     //    @ControllerLog
     @GetMapping(path = "/{id}")
     public Long getConfig(@PathVariable("id") Long id,
@@ -71,17 +50,10 @@ public class DemoController {
         return id;
     }
 
-    @GetMapping(path = "/get/{name}")
-    public String getName(@PathVariable("name") String name){
-
-        Long.parseLong(name);
-
-        return "AchillesWild";
-    }
-
     @GetMapping(path = "/event")
     public String invokeEvent(){
 
+        applicationContext.publishEvent(new MyApplicationEvent("invokeEvent"));
 
         return "invokeEvent ok";
     }
