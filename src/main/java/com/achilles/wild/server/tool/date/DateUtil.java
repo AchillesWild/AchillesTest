@@ -337,7 +337,7 @@ public class DateUtil {
 	 */
 	public static Date getDateByAddMill(long milliseconds){
     	Calendar calendar = Calendar.getInstance();
-    	calendar.setTimeInMillis(calendar.getTimeInMillis()+milliseconds); 
+    	calendar.setTimeInMillis(calendar.getTimeInMillis() + milliseconds);
 		return calendar.getTime();
 	}
     
@@ -348,7 +348,7 @@ public class DateUtil {
 	 */
 	public static Date getDateByAddMilli(long milliseconds){
 		Date date=new Date(); 
-		date.setTime(date.getTime()+milliseconds);  
+		date.setTime(date.getTime() + milliseconds);
 		return date;
 	}
   

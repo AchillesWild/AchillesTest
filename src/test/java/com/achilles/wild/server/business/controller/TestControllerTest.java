@@ -1,7 +1,6 @@
 package com.achilles.wild.server.business.controller;
 
 import com.MyApplicationTests;
-import com.ThreadTest;
 import com.achilles.wild.server.tool.http.HttpGetUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,14 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 
-public class DemoControllerTest extends MyApplicationTests {
+public class TestControllerTest extends MyApplicationTests {
 
-    private final static Logger log = LoggerFactory.getLogger(DemoControllerTest.class);
+    private final static Logger log = LoggerFactory.getLogger(TestControllerTest.class);
 
     String url = urlPrefix+"demo/check/heartbeat";
 

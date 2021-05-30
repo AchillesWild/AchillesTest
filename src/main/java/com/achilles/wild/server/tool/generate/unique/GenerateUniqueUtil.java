@@ -2,6 +2,8 @@ package com.achilles.wild.server.tool.generate.unique;
 
 import com.achilles.wild.server.tool.date.DateUtil;
 
+import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -14,12 +16,16 @@ import java.util.UUID;
 public class GenerateUniqueUtil {
 
 	public static void main(String[] args) {
-		System.out.println(getRandomUUID());
+		for (int i = 0; i < 100; i++) {
+			System.out.println(getRandomDouble(2));
+		}
+
 	}
 
 
 	public static String getTraceId(String mark){
-		String traceId = DateUtil.getCurrentStr(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS)+"_"
+		String traceId = DateUtil.getCurrentStr(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS)
+				+"_"
 				+ mark+"_"
 				+ GenerateUniqueUtil.getUuId();
 		return traceId;
@@ -78,8 +84,71 @@ public class GenerateUniqueUtil {
             str=str.substring(0, maxLength); 
         }
         return str;
-    }	
-	
+    }
+
+	/**
+	 * 获取<参数值得随机数（>=0  and  < max）
+	 *
+	 * @param max
+	 * @return
+	 */
+	public static int getRandomInt(int max){
+
+		SecureRandom secureRandom = new SecureRandom();
+		int randomNumber =  secureRandom.nextInt(max);
+
+		return randomNumber;
+	}
+
+	/**
+	 * get random range 0.0d (inclusive) to 1.0d (exclusive)
+	 *
+	 * @return
+	 */
+	public static double getRandomDouble(int newScale){
+
+		Double randomNumber =  getRandomDouble();
+		BigDecimal bg = new BigDecimal(randomNumber);
+		double number = bg.setScale(newScale, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+		return number;
+	}
+
+	/**
+	 * get random range 0.0d (inclusive) to 1.0d (exclusive)
+	 *
+	 * @return
+	 */
+	public static double getRandomDouble(){
+
+		SecureRandom secureRandom = new SecureRandom();
+		Double randomNumber =  secureRandom.nextDouble();
+
+		return randomNumber;
+	}
+
+	/**
+	 * 生成制定长度的字节数组的随机数
+	 *
+	 * @param bytes  example : new byte[2]
+	 */
+	public static void makeRandomByte(byte[] bytes){
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.nextBytes(bytes);
+	}
+
+	/**
+	 * 获取随机boolean值
+	 *
+	 * @return
+	 */
+	public static boolean getRandomBoolean(){
+
+		SecureRandom secureRandom = new SecureRandom();
+		boolean randomBoolean =  secureRandom.nextBoolean();
+
+		return randomBoolean;
+	}
 	
 	/**
 	 * 根据传入的数字获取这个值长度内的随机数

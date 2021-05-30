@@ -44,7 +44,7 @@ public class HttpGetUtil {
 			}
 		}
 
-		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 1005000);// 超时为5秒
+		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);// 超时为5秒
 		getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
 
 		log.debug("请求URL=" + url + "  入参=" + urlParams);

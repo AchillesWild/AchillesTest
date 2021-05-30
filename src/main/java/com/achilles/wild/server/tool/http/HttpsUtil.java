@@ -1,12 +1,18 @@
-package com.achilles.tool.http;
+package com.achilles.wild.server.tool.http;
 
-import javax.net.ssl.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * https请求工具类
@@ -41,6 +47,8 @@ public class HttpsUtil {
 	/**
 	 * 发送报文，返回结果，返回""代表异常或请求失败，查看log
 	 * @param url
+	 * @param xmlText
+	 * @param type
 	 * @return
 	 */
 	public static String request(String url, String postData,String requestType) {

@@ -1,4 +1,4 @@
-package com.achilles.wild.server.config;
+package com.achilles.wild.server.common.http;
 
 
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
+
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
         return new RestTemplate(factory);
@@ -17,8 +18,8 @@ public class RestTemplateConfig {
     @Bean
     public ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setReadTimeout(1000);
-        factory.setConnectTimeout(1000);
+        factory.setReadTimeout(2000);
+        factory.setConnectTimeout(2000);
         return factory;
     }
 }
