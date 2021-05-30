@@ -34,7 +34,7 @@ public class ImageController {
 
     @ResponseBody
     @GetMapping(value = "/getImage")
-    public void getImage() throws IOException {
+    public void getImage(String localPth) throws IOException {
 
         try (
             FileInputStream inputStream = new FileInputStream("C:\\Users\\Achilles\\Desktop\\photo\\44.jpg");
