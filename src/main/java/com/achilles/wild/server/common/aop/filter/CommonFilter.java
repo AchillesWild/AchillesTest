@@ -55,6 +55,8 @@ public class CommonFilter implements Filter {
             log.debug("---------------traceId  generate by  system---------------------:" + traceId);
         }
 
+        log.debug("---------------token---------------------:" + request.getHeader("token"));
+
         MDC.put(CommonConstant.TRACE_ID,traceId);
 
         String servletPath = request.getServletPath();
