@@ -118,9 +118,24 @@
 		</filter>
 	</appender>
 
+	<!-- 异步输出 -->
+<!--	<appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">-->
+		<!-- 使用默认值20，或者设置大于0。如果设置discardingThreshold＝0，表示queue 满了，不丢弃，block线程
+			 默认情况下，当阻塞队列剩余20%的容量时，它将丢弃级别跟踪、调试和信息事件，只保留级别警告和错误事件。要保留所有事件，请将discardingThreshold设置为0。
+		-->
+<!--		<discardingThreshold>0</discardingThreshold>-->
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+<!--		<queueSize>1024</queueSize>/-->
+		<!-- 队列满了不阻塞调用者-->
+<!--		<neverBlock>true</neverBlock>-->
+		<!-- 添加附加的appender,最多只能添加一个 -->
+<!--		<appender-ref ref ="INFO_FILE"/>-->
+<!--	</appender>-->
+
 	<root level="info">
 		<!-- log just show in console-->
 		<appender-ref ref="CONSOLE" />
+<!--		<appender-ref ref="ASYNC" />-->
 		<!-- if you need to create files,open them below -->
 <!--		<appender-ref ref="DEBUG_FILE" />-->
 <!--		<appender-ref ref="INFO_FILE" />-->

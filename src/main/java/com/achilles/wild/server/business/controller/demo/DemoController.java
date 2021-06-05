@@ -53,6 +53,8 @@ public class DemoController {
     @GetMapping(path = "/event")
     public String invokeEvent(){
 
+        log.info("----------------------invokeEvent-------------------------------");
+
         applicationContext.publishEvent(new MyApplicationEvent("invokeEvent"));
 
         return "invokeEvent ok";
