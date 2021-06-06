@@ -18,6 +18,7 @@ public enum BaseResultCode implements Serializable {
     NOT_LOGIN("300", "NOT LOGIN ~"),
 
     PERMISSION_DENIED("403", "permission denied !"),
+    NOT_FOUND("404", "404 !"),
 
 
     EXCEPTION_TO_CLIENT("1000", "the server is too busy ~ : %s"),

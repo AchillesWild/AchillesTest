@@ -27,6 +27,6 @@ public class FeignTest extends MyTestApplicationTests {
         Map<String, String> headerMap = new HashMap<>();
         headerMap.put("traceId",traceId);
         String result = balanceClient.heartbeat(traceId);
-        log.info("result:"+result);
+        log.info("result : "+result);
     }
 }
