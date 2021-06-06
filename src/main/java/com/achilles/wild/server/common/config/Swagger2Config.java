@@ -1,19 +1,18 @@
 package com.achilles.wild.server.common.config;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
+@EnableOpenApi
 public class Swagger2Config {
 
     /**
@@ -26,19 +25,20 @@ public class Swagger2Config {
      */
     @Bean
     public Docket createRestApi() {
+        return new Docket(DocumentationType.OAS_30)
+                .enable(true)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.achilles.wild.server.business.controller"))
+                .paths(PathSelectors.any())
+                .build();
+
 //        return new Docket(DocumentationType.SWAGGER_2)
 //                .apiInfo(apiInfo())
 //                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.achilles.wild.server.business.controller"))
+//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))  //添加ApiOperiation注解的被扫描
 //                .paths(PathSelectors.any())
 //                .build();
-
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))  //添加ApiOperiation注解的被扫描
-                .paths(PathSelectors.any())
-                .build();
     }
 
     /**
@@ -48,10 +48,10 @@ public class Swagger2Config {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful APIs")
+                .title("Swagger2")
                 .description("更多请关注https://blog.csdn.net/u012373815")
                 .termsOfServiceUrl("https://blog.csdn.net/u012373815")
-                .contact(new Contact("Achilles","wild","532398999"))
+                .contact(new Contact("Achilles","wild","532398999@qq.com"))
                 .version("1.0")
                 .build();
     }

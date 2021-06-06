@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
-
-@WebFilter(urlPatterns = "/*" , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
+@Order(1)
+@WebFilter(urlPatterns = {"/demo"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
 public class CommonFilter implements Filter {
 
     private final static Logger log = LoggerFactory.getLogger(CommonFilter.class);
@@ -31,11 +33,14 @@ public class CommonFilter implements Filter {
     @Value("${if.verify.trace.id:true}")
     Boolean verifyTraceId;
 
-    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+    @Value("#{'${auth.filter.exclude-urls}'.split(',')}")
+    private List<String> authFilterExcludeUrls;
+
+    private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         this.loginUri = filterConfig.getInitParameter("loginUri");
         log.debug("-------------------------------------init-----------------------------------URL=" + this.loginUri);
     }
@@ -43,9 +48,23 @@ public class CommonFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String servletPath = request.getServletPath();
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        boolean authFilterExcludeMatch = authFilterExcludeUrls.stream()
+                .anyMatch(
+                        authFilterExcludeUrl ->
+                                PATH_MATCHER.match(authFilterExcludeUrl, servletPath) || servletPath.endsWith(authFilterExcludeUrl)
+                );
+        if (authFilterExcludeMatch) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         long startTime = System.currentTimeMillis();
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+
         String traceId = request.getHeader(CommonConstant.TRACE_ID);
         if(verifyTraceId){
             log.debug("---------------traceId  from  client---------------------:" + traceId);
@@ -58,17 +77,6 @@ public class CommonFilter implements Filter {
         log.debug("---------------token---------------------:" + request.getHeader("token"));
 
         MDC.put(CommonConstant.TRACE_ID,traceId);
-
-        String servletPath = request.getServletPath();
-
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods","POST, GET, PUT, OPTIONS, DELETE, PATCH");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers","token,Origin, X-Requested-With, Content-Type, Accept");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
 
         filterChain.doFilter(servletRequest,servletResponse);
 
