@@ -1,5 +1,12 @@
 package com.achilles.wild.server.tool.bean;
 
+import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
+import jodd.util.Base64;
+import org.apache.spark.util.SizeEstimator;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.FatalBeanException;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -8,18 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.FatalBeanException;
+import java.util.*;
 
 
 public class BeanUtil {
@@ -448,6 +444,21 @@ public class BeanUtil {
 //        user.setType(null);
 //        user.setPassword("232");
 //        System.out.println(getBeanVal(user,null));;
+
+		System.out.println(ObjectSizeCalculator.getObjectSize(new Base64[9]));
+		System.out.println(SizeEstimator.estimate(new Base64[9]));
     }
-    
+
+
+	/**
+	 * getObjectSize
+	 *
+	 * @param obj
+	 * @return
+	 */
+	public static long getObjectSize(Object obj){
+		return ObjectSizeCalculator.getObjectSize(obj);
+//		return SizeEstimator.estimate(obj);
+	}
+
 }
