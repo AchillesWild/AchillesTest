@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Slf4j
 public class QueueController {
 
-    int capacity = 100000000;
+    int capacity = 10000000;
 
     private final Queue arrayBlockingQueue = new ArrayBlockingQueue<>(capacity);
 
@@ -38,7 +38,7 @@ public class QueueController {
     @PostMapping(path = "/ConcurrentLinkedQueue/add")
     public Object concurrentLinkedQueue(){
 
-        log.info("-----------------ConcurrentLinkedQueue-----------------");
+//        log.info("-----------------ConcurrentLinkedQueue-----------------");
 
         boolean result  = concurrentLinkedQueue.offer(GenerateUniqueUtil.getUuId());
         if (!result) {
@@ -51,7 +51,7 @@ public class QueueController {
     @PostMapping(path = "/LinkedBlockingQueue/add")
     public Object linkedBlockingQueue(){
 
-        log.info("-----------------linkedBlockingQueue-----------------");
+//        log.info("-----------------linkedBlockingQueue-----------------");
 
         boolean result  = linkedBlockingQueue.offer(GenerateUniqueUtil.getUuId());
         if (!result) {
@@ -64,7 +64,7 @@ public class QueueController {
     @PostMapping(path = "/ArrayBlockingQueue/add")
     public Object arrayBlockingQueue(){
 
-        log.info("-----------------arrayBlockingQueue-----------------");
+//        log.info("-----------------arrayBlockingQueue-----------------");
 
         boolean result  = arrayBlockingQueue.offer(GenerateUniqueUtil.getUuId());
         if (!result) {
@@ -77,7 +77,7 @@ public class QueueController {
     @PostMapping(path = "/Disruptor/add")
     public Object disruptor(){
 
-        log.info("-----------------disruptor-----------------");
+//        log.info("-----------------disruptor-----------------");
 
         long sequence = ringBuffer.next();
         BaseRequest baseRequest = ringBuffer.get(sequence);
