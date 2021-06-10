@@ -100,4 +100,6 @@ public class SpringContextUtil implements ApplicationContextAware {
   public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
     return applicationContext.getAliases(name);
   }
+
+//  WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext();
 }
