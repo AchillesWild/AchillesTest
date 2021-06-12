@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class MultiThreadTest {
 
 
-    public ExecutorService executor = new ThreadPoolExecutor( 1500, 2000, 10, TimeUnit.SECONDS,
+    public ExecutorService executor = new ThreadPoolExecutor( 10000, 20000, 10, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(100000000), new ThreadPoolExecutor.AbortPolicy());
 
     @Test
@@ -23,9 +23,10 @@ public class MultiThreadTest {
             map.put(GenerateUniqueUtil.getUuId(),GenerateUniqueUtil.getUuId());
         }
 
-        int count = 1000;
-        int maxThread = 10000;
+        int count = 10000;
+        int maxThread = 1000;
         CountDownLatch countDownLatch = new CountDownLatch(count * maxThread);
+        Stopwatch totalStopWatch = Stopwatch.createStarted();
         final List<Long> list = new Vector<>();
         for (int k = 0; k < count; k++) {
             for (int i = 0; i < maxThread; i++) {
@@ -42,17 +43,16 @@ public class MultiThreadTest {
 
         countDownLatch.await();
 
-        System.out.println("size : " + list.size());
+        System.out.println("                total  duration : " + totalStopWatch.elapsed(TimeUnit.SECONDS)+"s");
+
+        System.out.println("                requests number : " + list.size());
 
         double avg = list.stream().mapToDouble(value -> Objects.isNull(value) ? 0L : value).average().getAsDouble();
-        System.out.println("avg : " + avg);
-
-//        List<Long> sortedlist = list.stream().filter(value->value!=null).sorted().collect(Collectors.toList());
-//        System.out.println("sort : " + sortedlist.subList(0,20)); //Collections.sort(list);
+        System.out.println("           avg rt(microseconds) : " + avg);
 
         List<Long> sortedlist = list.stream().filter(value->value!=null).sorted().collect(Collectors.toList());
         Collections.reverse(sortedlist);
-        System.out.println("sort : " + sortedlist.subList(0,30));
+        System.out.println("sort rt(microseconds) max-->min : " + sortedlist.subList(0,30));
     }
 
     @Test
