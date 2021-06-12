@@ -1,6 +1,7 @@
 package com.achilles.wild.server.tool.queue;
 
 import com.achilles.wild.server.model.request.BaseRequest;
+import com.achilles.wild.server.other.thread.MultiThreadBase;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -10,15 +11,59 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import org.junit.Test;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Vector;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-public class DisruptorUtil {
+public class DisruptorUtil extends MultiThreadBase {
 
+
+    RingBuffer<BaseRequest> ringBuffer = messageModelRingBuffer();
+
+    @Test
+    public void multiThreadTest() throws Exception{
+
+        int count = 1000;
+        int maxThread = 1000;
+        CountDownLatch countDownLatch = new CountDownLatch(count * maxThread);
+        Stopwatch totalStopWatch = Stopwatch.createStarted();
+        final List<Long> list = new Vector<>();
+        for (int k = 0; k < count; k++) {
+            for (int i = 0; i < maxThread; i++) {
+                final int m=i;
+                executor.submit(()->{
+                    Stopwatch stopwatch = Stopwatch.createStarted();
+                    long sequence = ringBuffer.next();
+                    BaseRequest baseRequest = ringBuffer.get(sequence);
+                    baseRequest.setId("AchillesWild");
+                    ringBuffer.publish(sequence);
+                    long duration = stopwatch.elapsed(TimeUnit.MICROSECONDS);
+                    list.add(duration);
+                    countDownLatch.countDown();
+                });
+            }
+        }
+
+        countDownLatch.await();
+
+        System.out.println("                total  duration : " + totalStopWatch.elapsed(TimeUnit.SECONDS)+"s");
+
+        System.out.println("                requests number : " + ringBuffer.next());
+
+        double avg = list.stream().mapToDouble(value -> Objects.isNull(value) ? 0L : value).average().getAsDouble();
+        System.out.println("           avg rt(microseconds) : " + avg);
+
+        List<Long> sortedlist = list.stream().filter(value->value!=null).sorted().collect(Collectors.toList());
+        Collections.reverse(sortedlist);
+        System.out.println("sort rt(microseconds) max-->min : " + sortedlist.subList(0,30));
+    }
 
     @Test
     public void test() throws Exception{
-
-        RingBuffer<BaseRequest> ringBuffer = messageModelRingBuffer();
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         long sequence = 0;
