@@ -3,8 +3,6 @@ package com.achilles.thread;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -12,45 +10,49 @@ import java.util.stream.Collectors;
 
 public class MultiThreadTest {
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThreadTest.class);
 
-    public ExecutorService executor = new ThreadPoolExecutor( 100, 200, 10, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
+    public ExecutorService executor = new ThreadPoolExecutor( 1500, 2000, 10, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(100000000), new ThreadPoolExecutor.AbortPolicy());
 
     @Test
     public void hashMapTest2() throws Exception{
         Map<String,String> map = new HashMap<>();
         String key = "achilles";
         map.put(key,"wild");
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < 500; i++) {
             map.put(GenerateUniqueUtil.getUuId(),GenerateUniqueUtil.getUuId());
         }
 
-        final List<Long> list = new ArrayList<>();
-        int max = 1000;
-        CountDownLatch count = new CountDownLatch(max);
-        for (int i = 0; i < max; i++) {
-            final int m=i;
-            executor.submit(()->{
-                Stopwatch stopwatch = Stopwatch.createStarted();
-                String result = map.get(key);
-//                System.out.println(result);
-                long duration = stopwatch.elapsed(TimeUnit.MICROSECONDS);
-                list.add(duration);
-                count.countDown();
-            });
+        int count = 1000;
+        int maxThread = 10000;
+        CountDownLatch countDownLatch = new CountDownLatch(count * maxThread);
+        final List<Long> list = new Vector<>();
+        for (int k = 0; k < count; k++) {
+            for (int i = 0; i < maxThread; i++) {
+                final int m=i;
+                executor.submit(()->{
+                    Stopwatch stopwatch = Stopwatch.createStarted();
+                    String result = map.get(key);
+                    long duration = stopwatch.elapsed(TimeUnit.MICROSECONDS);
+                    list.add(duration);
+                    countDownLatch.countDown();
+                });
+            }
         }
-        count.await();
 
-        System.out.println(list.size());
+        countDownLatch.await();
+
+        System.out.println("size : " + list.size());
+
         double avg = list.stream().mapToDouble(value -> Objects.isNull(value) ? 0L : value).average().getAsDouble();
-        System.out.println("avg = " + avg);
+        System.out.println("avg : " + avg);
+
+//        List<Long> sortedlist = list.stream().filter(value->value!=null).sorted().collect(Collectors.toList());
+//        System.out.println("sort : " + sortedlist.subList(0,20)); //Collections.sort(list);
 
         List<Long> sortedlist = list.stream().filter(value->value!=null).sorted().collect(Collectors.toList());
-        System.out.println("sort : " + sortedlist); //Collections.sort(list);
-
         Collections.reverse(sortedlist);
-        System.out.println("sort : " + sortedlist);
+        System.out.println("sort : " + sortedlist.subList(0,30));
     }
 
     @Test

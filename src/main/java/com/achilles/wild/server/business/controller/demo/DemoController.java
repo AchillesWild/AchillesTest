@@ -1,6 +1,5 @@
 package com.achilles.wild.server.business.controller.demo;
 
-import com.achilles.wild.server.common.aop.limit.annotation.CommonQpsLimit;
 import com.achilles.wild.server.common.listener.event.MyApplicationEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class DemoController {
     HttpServletResponse httpServletResponse;
 
     @GetMapping(path = "/check/heartbeat")
-    @CommonQpsLimit(permitsPerSecond = 0.2,code = "0",message = "checkHeartBeat too much")
+//    @CommonQpsLimit(permitsPerSecond = 0.2,code = "0",message = "checkHeartBeat too much")
     public String checkHeartBeat(){
         return "Everything is fine !";
     }
