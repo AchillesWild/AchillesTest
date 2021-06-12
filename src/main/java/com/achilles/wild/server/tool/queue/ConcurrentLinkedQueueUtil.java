@@ -19,7 +19,7 @@ public class ConcurrentLinkedQueueUtil  extends MultiThreadBase {
     public void multiThreadTest() throws Exception{
 
         int count = 1000;
-        int maxThread = 1000;
+        int maxThread = 10000;
         CountDownLatch countDownLatch = new CountDownLatch(count * maxThread);
         Stopwatch totalStopWatch = Stopwatch.createStarted();
         final List<Long> list = new Vector<>();
