@@ -13,7 +13,7 @@ public class MultiThreadMapTest extends MultiThreadBase{
 
 
     @Test
-    public void hashMapTest2() throws Exception{
+    public void multiThreadTest() throws Exception{
         Map<String,String> map = new HashMap<>();
         String key = "achilles";
         map.put(key,"wild");
@@ -21,8 +21,8 @@ public class MultiThreadMapTest extends MultiThreadBase{
             map.put(GenerateUniqueUtil.getUuId(),GenerateUniqueUtil.getUuId());
         }
 
-        int count = 10000;
-        int maxThread = 1000;
+        int count = 1000;
+        int maxThread = 10000;
         CountDownLatch countDownLatch = new CountDownLatch(count * maxThread);
         Stopwatch totalStopWatch = Stopwatch.createStarted();
         final List<Long> list = new Vector<>();

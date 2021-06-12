@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 
 public class DisruptorUtil extends MultiThreadBase {
 
+    //2^20 1048576  2^14 16384 2^24 16777216
+    private Integer bufferSize = 1024;
 
     RingBuffer<BaseRequest> ringBuffer = messageModelRingBuffer();
 
@@ -97,7 +99,7 @@ public class DisruptorUtil extends MultiThreadBase {
         //性能表现和com.lmax.disruptor.BlockingWaitStrategy差不多，对CPU的消耗也类似，但其对生产者线程的影响最小，适合用于异步日志类似的场景,是一种无锁的方式
         Disruptor<BaseRequest> disruptor = new Disruptor<>(
                 factory,
-                1024,
+                bufferSize,
                 new ThreadFactoryBuilder().setNameFormat("disruptor_consumer_%d").build(),
                 ProducerType.MULTI,
                 new SleepingWaitStrategy());
