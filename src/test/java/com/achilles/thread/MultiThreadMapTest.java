@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class MultiThreadTest {
+public class MultiThreadMapTest {
 
 
     public ExecutorService executor = new ThreadPoolExecutor( 10000, 20000, 10, TimeUnit.SECONDS,
@@ -55,27 +55,4 @@ public class MultiThreadTest {
         System.out.println("sort rt(microseconds) max-->min : " + sortedlist.subList(0,30));
     }
 
-    @Test
-    public void hashMapTest() throws Exception{
-        Map<String,String> map = new HashMap<>();
-        String key = "achilles";
-        map.put(key,"wild");
-        for (int i = 0; i < 99; i++) {
-            map.put(GenerateUniqueUtil.getUuId(),GenerateUniqueUtil.getUuId());
-        }
-
-        final List<Long> list = new ArrayList<>();
-        int max = 1;
-        CountDownLatch count = new CountDownLatch(max);
-        for (int i = 0; i < max; i++) {
-            final int m=i;
-            executor.submit(()->{
-                long threadStartTime = System.nanoTime();
-                String result = map.get(key);
-                System.out.println(System.nanoTime() - threadStartTime);
-                count.countDown();
-            });
-        }
-        count.await();
-    }
 }
