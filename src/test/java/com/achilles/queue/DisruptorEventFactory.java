@@ -1,4 +1,4 @@
-package com.achilles.wild.server.tool.queue;
+package com.achilles.queue;
 
 import com.achilles.wild.server.model.request.BaseRequest;
 import com.lmax.disruptor.EventFactory;

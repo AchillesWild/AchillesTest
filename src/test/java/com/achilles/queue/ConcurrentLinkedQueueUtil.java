@@ -1,23 +1,22 @@
-package com.achilles.wild.server.tool.queue;
+package com.achilles.queue;
 
-import com.achilles.wild.server.other.thread.MultiThreadBase;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class ArrayBlockingQueueUtil extends MultiThreadBase {
+public class ConcurrentLinkedQueueUtil{
 
-    Queue queue = new ArrayBlockingQueue<>(100000000);
-
+    Queue queue = new ConcurrentLinkedQueue<>();
 
     @Test
     public void multiThreadTest() throws Exception{
+
+        ExecutorService executor = new ThreadPoolExecutor( 10000, 20000, 10, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(100000000), new ThreadPoolExecutor.AbortPolicy());
 
         int count = 1000;
         int maxThread = 10000;

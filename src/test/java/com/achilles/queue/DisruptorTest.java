@@ -1,7 +1,6 @@
-package com.achilles.wild.server.tool.queue;
+package com.achilles.queue;
 
 import com.achilles.wild.server.model.request.BaseRequest;
-import com.achilles.wild.server.other.thread.MultiThreadBase;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -15,11 +14,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class DisruptorUtil extends MultiThreadBase {
+public class DisruptorTest {
 
     //2^20 1048576  2^14 16384 2^24 16777216
     private Integer bufferSize = 1024;
@@ -28,6 +26,9 @@ public class DisruptorUtil extends MultiThreadBase {
 
     @Test
     public void multiThreadTest() throws Exception{
+
+        ExecutorService executor = new ThreadPoolExecutor( 10000, 20000, 10, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(100000000), new ThreadPoolExecutor.AbortPolicy());
 
         int count = 1000;
         int maxThread = 10000;
@@ -77,8 +78,8 @@ public class DisruptorUtil extends MultiThreadBase {
         }
 
         long duration = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        System.out.println("duration : "+duration);
-        System.out.println("sequence : "+sequence);
+        System.out.println("duration : " + duration);
+        System.out.println("sequence : " + sequence);
     }
 
 

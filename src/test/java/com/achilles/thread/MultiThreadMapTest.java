@@ -1,6 +1,5 @@
 package com.achilles.thread;
 
-import com.achilles.wild.server.other.thread.MultiThreadBase;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
@@ -9,11 +8,15 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class MultiThreadMapTest extends MultiThreadBase{
+public class MultiThreadMapTest {
 
 
     @Test
     public void multiThreadTest() throws Exception{
+
+        ExecutorService executor = new ThreadPoolExecutor( 10000, 20000, 10, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(100000000), new ThreadPoolExecutor.AbortPolicy());
+
         Map<String,String> map = new HashMap<>();
         String key = "achilles";
         map.put(key,"wild");

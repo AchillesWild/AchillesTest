@@ -132,7 +132,7 @@
 <!--		<appender-ref ref ="INFO_FILE"/>-->
 <!--	</appender>-->
 
-	<root level="info">
+	<root level="debug">
 		<!-- log just show in console-->
 		<appender-ref ref="CONSOLE" />
 <!--		<appender-ref ref="ASYNC" />-->

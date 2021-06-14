@@ -51,7 +51,7 @@ public class DisruptorConfig {
 //                new YieldingWaitStrategy());
 
         //设置事件业务处理器---消费者
-//        disruptor.handleEventsWith(new ConsumerEventHandler());
+        disruptor.handleEventsWith(new ConsumerEventHandler());
 
         // 启动disruptor线程
         disruptor.start();
