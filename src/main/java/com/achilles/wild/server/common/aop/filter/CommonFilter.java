@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @Order(1)
-@WebFilter(urlPatterns = {"/demo"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
+@WebFilter(urlPatterns = {"/demo/*","/swagger/*"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
 public class CommonFilter implements Filter {
 
     private final static Logger log = LoggerFactory.getLogger(CommonFilter.class);
