@@ -14,7 +14,8 @@
 	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
 	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 	<!-- 彩色日志格式 -->
-	<property name="CONSOLE_PATTERN" value="${CONSOLE_PATTERN:-%clr(%d{HH:mm:ss.SSS}){faint} %clr(%green(${LOG_LEVEL_PATTERN:-%5p})) %clr([%boldMagenta(%thread)]) %clr([%blue(%X{traceId})]) %logger{5}#%M %clr(%L) %clr(:){faint} %cyan(%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx})}"/>
+	<property name="CONSOLE_PATTERN" value="${CONSOLE_PATTERN:-%clr(%d{HH:mm:ss.SSS}) %clr(%green(${LOG_LEVEL_PATTERN:-%2p})) %clr([%boldMagenta(%thread)]) %clr([%blue(%X{traceId})]) %logger{5}#%M %clr(%L) %clr(:){faint} %cyan(%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx})}"/>
+	<property name="CONSOLE_PATTERN_SIMPLE" value="${CONSOLE_PATTERN_SIMPLE:-%clr(%d{mm:ss.SSS}) %clr(%green(${LOG_LEVEL_PATTERN:-%2p})) %clr([%boldMagenta(%thread)]) %logger{5} %clr(:){faint} %cyan(%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx})}"/>
 	<property name="FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{traceId}] %logger{50} %L - %msg%n"/>
 
 
@@ -24,7 +25,7 @@
 			<level>DEBUG</level>
 		</filter>
 		<encoder>
-			<Pattern>${CONSOLE_PATTERN}</Pattern>
+			<Pattern>${CONSOLE_PATTERN_SIMPLE}</Pattern>
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
