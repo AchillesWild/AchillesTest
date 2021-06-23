@@ -21,7 +21,7 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
         <!--
         %logger{36} 表示 Logger 名字最长36个字符
         -->
-        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}] %C#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />
+        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}]  %C{1.}#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />
         <property name="LOG_PATTERN_SIMPLE" value="%d{mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] %C{1.} : %style{%msg%n}{cyan}%style{%throwable}{red}" />
         <!-- 定义日志存储的路径，不要配置相对路径 -->
         <property name="FILE_PATH" value="D:/logs" />
@@ -31,7 +31,7 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
     <appenders>
         <console name="Console" target="SYSTEM_OUT">
             <!--输出日志的格式-->
-            <PatternLayout pattern="${LOG_PATTERN_SIMPLE}" disableAnsi="false" noConsoleNoAnsi="false"/>
+            <PatternLayout pattern="${LOG_PATTERN}" disableAnsi="false" noConsoleNoAnsi="false"/>
 
             <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>

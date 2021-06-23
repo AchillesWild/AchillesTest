@@ -89,7 +89,7 @@ public class CommonFilter implements Filter {
         log.debug(" ----------- time-consuming : ("+servletPath+")-->("+duration+"ms)");
 
         MDC.remove(CommonConstant.TRACE_ID);
-
+        ThreadContext.remove(CommonConstant.TRACE_ID);
     }
 
     @Override
