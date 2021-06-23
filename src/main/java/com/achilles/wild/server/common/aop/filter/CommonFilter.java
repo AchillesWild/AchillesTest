@@ -6,6 +6,7 @@ import com.achilles.wild.server.model.response.code.BaseResultCode;
 import com.achilles.wild.server.tool.date.DateUtil;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -22,8 +23,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+
+//{"/demo/*","/swagger/*"}
 @Order(1)
-@WebFilter(urlPatterns = {"/demo/*","/swagger/*"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
+@WebFilter(urlPatterns = {"/*"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
 public class CommonFilter implements Filter {
 
     private final static Logger log = LoggerFactory.getLogger(CommonFilter.class);
@@ -77,6 +80,7 @@ public class CommonFilter implements Filter {
         log.debug("---------------token---------------------:" + request.getHeader("token"));
 
         MDC.put(CommonConstant.TRACE_ID,traceId);
+        ThreadContext.put(CommonConstant.TRACE_ID, traceId);
 
         filterChain.doFilter(servletRequest,servletResponse);
 

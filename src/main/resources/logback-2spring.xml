@@ -25,7 +25,7 @@
 			<level>DEBUG</level>
 		</filter>
 		<encoder>
-			<Pattern>${CONSOLE_PATTERN_SIMPLE}</Pattern>
+			<Pattern>${CONSOLE_PATTERN}</Pattern>
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
