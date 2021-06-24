@@ -1,38 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，
-当设置成trace时，可以看到log4j2内部各种详细输出
--->
-<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <configuration monitorInterval="5">
-    <!--日志级别以及优先级排序:
-    OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
-    -->
 
-    <!--变量配置-->
+<!--    OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL-->
     <Properties>
-        <!--
-            格式化输出：
-            %d表示日期，
-            %thread表示线程名，
-            %-5level：级别从左显示5个字符宽度
-            %msg：日志消息，%n是换行符
-        -->
-        <!--
-        %logger{36} 表示 Logger 名字最长36个字符
-        -->
-        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}]  %C{1.}#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />
+        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}] %C{1.}#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />
         <property name="LOG_PATTERN_SIMPLE" value="%d{mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] %C{1.} : %style{%msg%n}{cyan}%style{%throwable}{red}" />
-        <!-- 定义日志存储的路径，不要配置相对路径 -->
         <property name="FILE_PATH" value="D:/logs" />
         <property name="FILE_NAME" value="AchillesTest" />
     </Properties>
 
     <appenders>
         <console name="Console" target="SYSTEM_OUT">
-            <!--输出日志的格式-->
             <PatternLayout pattern="${LOG_PATTERN}" disableAnsi="false" noConsoleNoAnsi="false"/>
-
             <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
 
@@ -105,7 +84,7 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
 <!--            <AppenderRef ref="Console"/>-->
 <!--        </Logger>-->
 
-        <root level="debug">
+        <root level="all">
             <appender-ref ref="Console"/>
 <!--            <appender-ref ref="FileLog"/>-->
 <!--            <appender-ref ref="RollingFileInfo"/>-->
