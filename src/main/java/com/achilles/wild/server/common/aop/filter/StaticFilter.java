@@ -3,23 +3,22 @@ package com.achilles.wild.server.common.aop.filter;
 import com.achilles.wild.server.model.response.code.BaseResultCode;
 import com.achilles.wild.server.tool.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
-
-@Order(1)
-@WebFilter(urlPatterns = {"/*"})
 @Slf4j
 public class StaticFilter implements Filter {
 
+    private String swaggerSuffix;
+
     @Override
     public void init(FilterConfig filterConfig) {
+
+        swaggerSuffix = filterConfig.getInitParameter("swagger_suffix");
         log.debug("-------------------------------------init-----------------------------------");
     }
 
@@ -30,8 +29,7 @@ public class StaticFilter implements Filter {
         String servletPath = request.getServletPath();
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-
-        if (servletPath.contains("/swagger-ui/index.html")) {
+        if (servletPath.contains(swaggerSuffix)) {
             String key = request.getParameter("key");
             if (!"AchillesTest".equals(key)) {
                 String userJson = JsonUtil.toJson(BaseResultCode.PERMISSION_DENIED.message);

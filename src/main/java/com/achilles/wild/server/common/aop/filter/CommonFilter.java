@@ -3,6 +3,7 @@ package com.achilles.wild.server.common.aop.filter;
 import com.achilles.wild.server.common.aop.exception.BizException;
 import com.achilles.wild.server.common.constans.CommonConstant;
 import com.achilles.wild.server.model.response.code.BaseResultCode;
+import com.achilles.wild.server.tool.SpringContextUtil;
 import com.achilles.wild.server.tool.date.DateUtil;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -10,42 +11,30 @@ import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 
-//{"/demo/*","/swagger/*"}
-@Order(1)
-@WebFilter(urlPatterns = {"/*"} , initParams = {@WebInitParam(name = "loginUri", value = "/login")})
 public class CommonFilter implements Filter {
 
     private final static Logger log = LoggerFactory.getLogger(CommonFilter.class);
 
-    private String loginUri;
-
-    @Value("${if.verify.trace.id:true}")
-    Boolean verifyTraceId;
-
-    @Value("#{'${auth.filter.exclude-urls}'.split(',')}")
-    private List<String> authFilterExcludeUrls;
-
     private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
+    private static final String OPEN_TRACE_ID = "open.trace.id";
+
+    private static final String EXCLUDE_URLS = "auth.filter.exclude-urls";
 
     @Override
     public void init(FilterConfig filterConfig) {
-        this.loginUri = filterConfig.getInitParameter("loginUri");
-        log.debug("-------------------------------------init-----------------------------------URL=" + this.loginUri);
+
     }
 
     @Override
@@ -55,7 +44,10 @@ public class CommonFilter implements Filter {
         String servletPath = request.getServletPath();
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean authFilterExcludeMatch = authFilterExcludeUrls.stream()
+        Environment environment = SpringContextUtil.getBean(Environment.class);
+        String[] authFilterExcludeUrls = environment.getProperty(EXCLUDE_URLS).split(",");
+
+        boolean authFilterExcludeMatch = Arrays.stream(authFilterExcludeUrls)
                 .anyMatch(
                         authFilterExcludeUrl ->
                                 PATH_MATCHER.match(authFilterExcludeUrl, servletPath) || servletPath.endsWith(authFilterExcludeUrl)
@@ -67,9 +59,9 @@ public class CommonFilter implements Filter {
 
         long startTime = System.currentTimeMillis();
 
-
         String traceId = request.getHeader(CommonConstant.TRACE_ID);
-        if(verifyTraceId){
+        Boolean openTraceId = environment.getProperty(OPEN_TRACE_ID,Boolean.class) == null ? true : environment.getProperty(OPEN_TRACE_ID,Boolean.class);
+        if(openTraceId){
             log.debug("---------------traceId  from  client---------------------:" + traceId);
             checkTraceId(traceId);
         }else{

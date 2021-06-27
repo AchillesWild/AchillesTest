@@ -1,22 +1,19 @@
 package com.achilles.wild.server.common.aop.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Order(0)
+
 @Slf4j
-@WebFilter(urlPatterns = {"/*"})
 public class FirstFilter implements Filter {
 
 
     @Override
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) throws ServletException {
         log.debug("-------------------------------------init-----------------------------------");
     }
 
