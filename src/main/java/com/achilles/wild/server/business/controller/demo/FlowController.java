@@ -6,7 +6,7 @@ import com.achilles.wild.server.common.aop.limit.annotation.RateLimit;
 import com.achilles.wild.server.common.aop.limit.sentinel.BlockHandler;
 import com.achilles.wild.server.common.aop.limit.sentinel.FallBackHandler;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(value = "/flow", produces = MediaType.APPLICATION_JSON_VALUE)
-@Slf4j
+@Log4j2
 public class FlowController {
 
     @Autowired

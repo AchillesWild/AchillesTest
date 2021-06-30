@@ -1,13 +1,12 @@
 package com.achilles.wild.server.business.controller.demo;
 
-import com.achilles.wild.server.common.listener.UploadExcelListener;
 import com.achilles.wild.server.common.aop.log.annotation.IgnoreParams;
+import com.achilles.wild.server.common.listener.UploadExcelListener;
 import com.achilles.wild.server.model.response.common.LogFilterInfoVO;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +28,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/excel",produces = {"application/json;charset=UTF-8"})
+@Log4j2
 public class ExcelController {
-
-    private final static Logger LOG = LoggerFactory.getLogger(ExcelController.class);
 
 
     @PostMapping("/upload2")
@@ -54,7 +52,7 @@ public class ExcelController {
             e.printStackTrace();
         }
         List<LogFilterInfoVO> list = listener.getList();
-        LOG.info("list==========="+ JSON.toJSONString(list));
+        log.info("list==========="+ JSON.toJSONString(list));
         return "success";
     }
 
@@ -66,9 +64,9 @@ public class ExcelController {
         InputStream inputStream = null;
         try {
             //String key = DigestUtils.md5Hex(file.getInputStream());
-            LOG.info("========file.getName()="+ file.getName()+",file.getSize()="+file.getSize()+",file.getContentType()="+file.getContentType());
-            LOG.info("========key=====111111===="+ DigestUtils.md5Hex(file.getName()+file.getSize()+file.getContentType()));
-            LOG.info("========key=====222222===="+ DigestUtils.md5Hex(file.getInputStream()));
+            log.info("========file.getName()="+ file.getName()+",file.getSize()="+file.getSize()+",file.getContentType()="+file.getContentType());
+            log.info("========key=====111111===="+ DigestUtils.md5Hex(file.getName()+file.getSize()+file.getContentType()));
+            log.info("========key=====222222===="+ DigestUtils.md5Hex(file.getInputStream()));
 
             inputStream = file.getInputStream();
 
@@ -79,7 +77,7 @@ public class ExcelController {
             e.printStackTrace();
         }
         List<LogFilterInfoVO> list = listener.getList();
-        LOG.info("list==========="+ JSON.toJSONString(list));
+        log.info("list==========="+ JSON.toJSONString(list));
         return "success";
     }
 

@@ -2,7 +2,7 @@ package com.achilles.wild.server.business.controller.demo;
 
 
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +14,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/Collection", produces = MediaType.APPLICATION_JSON_VALUE)
-@Slf4j
+@Log4j2
 public class CollectionController {
 
 
     final Map<String,String> map = new HashMap<>();
+
     String key;
 
     @PostConstruct

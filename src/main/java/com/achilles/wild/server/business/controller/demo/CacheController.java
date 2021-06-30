@@ -3,8 +3,7 @@ package com.achilles.wild.server.business.controller.demo;
 import com.achilles.wild.server.model.request.BaseRequest;
 import com.achilles.wild.server.model.response.BaseResult;
 import com.github.benmanes.caffeine.cache.Cache;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/cache", produces = MediaType.APPLICATION_JSON_VALUE)
+@Log4j2
 public class CacheController {
-
-    private final static Logger log = LoggerFactory.getLogger(CacheController.class);
 
 //    @Autowired
 //    private RedisTemplate<String, Serializable> serializableRedisTemplate;

@@ -7,7 +7,7 @@ import com.achilles.wild.server.model.response.BaseResult;
 import com.achilles.wild.server.model.response.code.BaseResultCode;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.lmax.disruptor.RingBuffer;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 @RestController
 @RequestMapping(value = "/queue", produces = MediaType.APPLICATION_JSON_VALUE)
-@Slf4j
+@Log4j2
 public class QueueController {
 
     int capacity = 10000000;

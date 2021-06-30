@@ -1,8 +1,7 @@
 package com.achilles.wild.server.business.controller.demo;
 
 import com.achilles.wild.server.common.listener.event.MyApplicationEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -15,10 +14,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/demo", produces = MediaType.APPLICATION_JSON_VALUE)
+@Log4j2
 public class DemoController {
-
-    private final static Logger log = LoggerFactory.getLogger(DemoController.class);
-
 
     @Autowired
     ApplicationContext applicationContext;

@@ -6,9 +6,8 @@ import com.achilles.wild.server.tool.file.FileUtil;
 import com.achilles.wild.server.tool.file.ImageUtil;
 import com.achilles.wild.server.tool.generate.encrypt.MD5Util;
 import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,9 +21,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/image")
+@Log4j2
 public class ImageController {
-
-    private final static Logger log = LoggerFactory.getLogger(ImageController.class);
 
     static String srcPath = "C:\\Users\\Achilles\\Desktop\\photo\\test\\10028.jpg";
 
