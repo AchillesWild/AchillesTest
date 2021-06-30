@@ -36,7 +36,7 @@ public class FiltersConfig {
         FilterRegistrationBean<CommonFilter> filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new CommonFilter());
         filterRegistrationBean.setName("commonFilter");
-        filterRegistrationBean.addUrlPatterns("/demo/*");
+        filterRegistrationBean.addUrlPatterns("/demo/*","/flow/*");
         filterRegistrationBean.setOrder(2);
         return filterRegistrationBean;
     }

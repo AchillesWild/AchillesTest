@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface CommonQpsLimit {
+public @interface CommonRateLimit {
 
     double permitsPerSecond() default 1.0;
 
