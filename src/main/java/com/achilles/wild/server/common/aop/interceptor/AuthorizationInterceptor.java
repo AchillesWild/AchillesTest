@@ -21,14 +21,13 @@ import java.util.Map;
 @Log4j2
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-
     private final Map<String, RateLimiter> rateLimiterMap = new HashMap<>();
 
     @Value("${open.rate.limit:true}")
     private Boolean openRateLimit;
 
-    @Value("${limit.rate:0.2}")
-    private Double rate;
+    @Value("${limit.rate:1}")
+    private Double defaultRateLimit;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -48,29 +47,29 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         HandlerMethod method = (HandlerMethod) handler;
         String path = method.getBeanType().getName() + "#" + method.getMethod().getName();
         CommonRateLimit commonRateLimit = method.getMethodAnnotation(CommonRateLimit.class);
+        String key;
+        Double rate;
         if (commonRateLimit != null){
             double permitsPerSecond = commonRateLimit.permitsPerSecond();
-            String key = path + "_" + permitsPerSecond;
-            RateLimiter rateLimiter = rateLimiterMap.get(key);
-            if (rateLimiter == null) {
-                synchronized (rateLimiterMap) {
-                    rateLimiter = rateLimiterMap.get(permitsPerSecond);
-                    if (rateLimiter == null) {
-                        rateLimiter = RateLimiter.create(permitsPerSecond);
-                        rateLimiterMap.put(key,rateLimiter);
-                    }
+            key = path + "_" + permitsPerSecond;
+            rate = permitsPerSecond;
+        } else {
+            key = path + "_" + defaultRateLimit;
+            rate = defaultRateLimit;
+        }
+        RateLimiter rateLimiter = rateLimiterMap.get(key);
+        if (rateLimiter == null) {
+            synchronized (rateLimiterMap) {
+                rateLimiter = rateLimiterMap.get(key);
+                if (rateLimiter == null) {
+                    rateLimiter = RateLimiter.create(rate);
+                    rateLimiterMap.put(key,rateLimiter);
                 }
             }
-            if (!rateLimiter.tryAcquire()) {
-                throw new BizException(BaseResultCode.REQUESTS_TOO_FREQUENT.code,BaseResultCode.REQUESTS_TOO_FREQUENT.message);
-            }
-            return true;
-        } else {
-
         }
-
-
-
+        if (!rateLimiter.tryAcquire()) {
+            throw new BizException(BaseResultCode.REQUESTS_TOO_FREQUENT.code,BaseResultCode.REQUESTS_TOO_FREQUENT.message);
+        }
 
         return true;
     }
