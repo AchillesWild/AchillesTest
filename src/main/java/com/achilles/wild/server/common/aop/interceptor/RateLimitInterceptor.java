@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,11 +26,16 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     private final Map<String, RateLimiter> rateLimiterMap = new HashMap<>();
 
+    private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+
     @Value("${open.rate.limit:true}")
     private Boolean openRateLimit;
 
     @Value("${limit.rate:1}")
     private Double defaultRateLimit;
+
+    @Value("#{'${rate.limit.filter.exclude-urls}'.split(',')}")
+    private List<String> rateLimitFilterExcludeUrls;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -39,6 +46,12 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
         String servletPath = request.getServletPath();
         log.debug("--------------------------servletPath : {}",servletPath);
+
+        boolean rateLimitFilterExcludeUrlsMatch = rateLimitFilterExcludeUrls.stream()
+                .anyMatch(authFilterExcludeUrl -> PATH_MATCHER.match(authFilterExcludeUrl, servletPath));
+        if (rateLimitFilterExcludeUrlsMatch) {
+            return true;
+        }
 
         // 404
         if (handler instanceof ResourceHttpRequestHandler) {
