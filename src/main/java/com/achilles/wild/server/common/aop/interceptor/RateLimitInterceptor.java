@@ -34,7 +34,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     @Value("${limit.rate:1}")
     private Double defaultRateLimit;
 
-    @Value("#{'${rate.limit.filter.exclude-urls}'.split(',')}")
+    @Value("#{'${rate.limit.filter.exclude-urls:}'.split(',')}")
     private List<String> rateLimitFilterExcludeUrls;
 
     @Override
