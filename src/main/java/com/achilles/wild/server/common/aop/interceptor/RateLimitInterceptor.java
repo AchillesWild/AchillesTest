@@ -31,7 +31,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     @Value("${open.rate.limit:true}")
     private Boolean openRateLimit;
 
-    @Value("${limit.rate:1}")
+    @Value("${limit.rate:10000}")
     private Double defaultRateLimit;
 
     @Value("#{'${rate.limit.filter.exclude-urls:}'.split(',')}")
