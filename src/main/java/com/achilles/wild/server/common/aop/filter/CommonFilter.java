@@ -63,7 +63,7 @@ public class CommonFilter implements Filter {
         Boolean openTraceId = environment.getProperty(OPEN_TRACE_ID,Boolean.class) == null ? true : environment.getProperty(OPEN_TRACE_ID,Boolean.class);
         if(openTraceId){
             log.debug("---------------traceId  from  client---------------------:" + traceId);
-            checkTraceId(traceId);
+//            checkTraceId(traceId);
         }else{
             traceId = GenerateUniqueUtil.getTraceId(CommonConstant.SYSTEM_CODE);
             log.debug("---------------traceId  generate by  system---------------------:" + traceId);

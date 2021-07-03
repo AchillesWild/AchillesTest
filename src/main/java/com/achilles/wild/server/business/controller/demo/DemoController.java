@@ -1,6 +1,8 @@
 package com.achilles.wild.server.business.controller.demo;
 
+import com.achilles.wild.server.business.controller.service.DemoService;
 import com.achilles.wild.server.common.listener.event.MyApplicationEvent;
+import com.achilles.wild.server.model.response.BaseResult;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping(value = "/demo", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,6 +33,9 @@ public class DemoController {
     @Autowired
     HttpServletResponse httpServletResponse;
 
+    @Autowired
+    DemoService demoService;
+
     @GetMapping(path = "/check/heartbeat")
 //    @CommonQpsLimit(permitsPerSecond = 0.2,code = "0",message = "checkHeartBeat too much")
     public String checkHeartBeat(){
@@ -44,6 +51,20 @@ public class DemoController {
 
 
         return id;
+    }
+
+    @GetMapping(path = "/async")
+    public BaseResult async() throws ExecutionException, InterruptedException {
+
+        log.info("------async-----");
+
+        demoService.doIt(System.currentTimeMillis() + "");
+
+        Future<String> future = demoService.asyncReturnFuture(System.currentTimeMillis() + "");
+
+        log.info("-----future----get : " +future.get());
+
+        return new BaseResult();
     }
 
     @GetMapping(path = "/event")

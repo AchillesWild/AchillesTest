@@ -3,8 +3,8 @@
 
 <!--    OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL-->
     <Properties>
-<!--        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}] %C{1.}#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />-->
-        <property name="LOG_PATTERN" value="%d{mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] %C{1.} : %style{%msg%n}{cyan}%style{%throwable}{red}" />
+        <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] [%style{%X{traceId}}{bright,blue}] %C{1.}#%M(%L) : %style{%msg%n}{cyan}%style{%throwable}{red}" />
+<!--        <property name="LOG_PATTERN" value="%d{mm:ss.SSS} %highlight{%-2level} [%style{%t}{magenta}] %C{1.} : %style{%msg%n}{cyan}%style{%throwable}{red}" />-->
         <property name="FILE_PATH" value="D:/logs" />
         <property name="FILE_NAME" value="AchillesTest" />
     </Properties>
@@ -84,7 +84,7 @@
 <!--            <AppenderRef ref="Console"/>-->
 <!--        </Logger>-->
 
-        <root level="all">
+        <root level="info">
             <appender-ref ref="Console"/>
 <!--            <appender-ref ref="FileLog"/>-->
 <!--            <appender-ref ref="RollingFileInfo"/>-->
