@@ -78,7 +78,7 @@ public class CommonFilter implements Filter {
 
 
         long duration = System.currentTimeMillis() - startTime;
-        log.debug(" ----------- time-consuming : ("+servletPath+")-->("+duration+"ms)");
+        log.debug(" ----------- time-consuming : "+servletPath+" --> "+duration+"ms");
 
         MDC.remove(CommonConstant.TRACE_ID);
         ThreadContext.remove(CommonConstant.TRACE_ID);

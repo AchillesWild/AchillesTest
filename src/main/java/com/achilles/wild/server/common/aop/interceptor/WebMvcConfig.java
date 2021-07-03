@@ -11,13 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
-    private AuthorizationInterceptor authorizationInterceptor;
+    private RateLimitInterceptor rateLimitInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
         //添加拦截器
-        InterceptorRegistration registration = registry.addInterceptor(authorizationInterceptor);
+        InterceptorRegistration registration = registry.addInterceptor(rateLimitInterceptor);
         //排除的路径
         registration.excludePathPatterns("/login");
         registration.excludePathPatterns("/logout");

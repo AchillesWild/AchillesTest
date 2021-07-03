@@ -1,5 +1,6 @@
 package com.achilles.wild.server.business.controller.demo;
 
+import com.achilles.wild.server.common.aop.limit.annotation.CommonRateLimit;
 import com.achilles.wild.server.model.request.BaseRequest;
 import com.achilles.wild.server.model.response.BaseResult;
 import com.achilles.wild.server.tool.json.JsonUtil;
@@ -25,6 +26,7 @@ public class SwaggerController {
     @ApiOperation(value = "增加账户",notes = "返回账户余额")
     @ApiResponses({ @ApiResponse(code = 200, message = "OK", response = BaseResult.class) })
     @PostMapping("/add")
+    @CommonRateLimit(permitsPerSecond = 0.5)
     public BaseResult getName(@RequestBody BaseRequest request){
 
         log.info("-------------------request:"+ JsonUtil.toJsonString(request));

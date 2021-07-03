@@ -6,7 +6,7 @@ import com.achilles.wild.server.common.aop.limit.annotation.RateLimit;
 import com.achilles.wild.server.common.aop.limit.sentinel.BlockHandler;
 import com.achilles.wild.server.common.aop.limit.sentinel.FallBackHandler;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(value = "/flow", produces = MediaType.APPLICATION_JSON_VALUE)
-@Log4j2
+@Slf4j
 public class FlowController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class FlowController {
     String str = "";
 
     @GetMapping(path = "/limit/aop/{rate}")
-    @CommonRateLimit(permitsPerSecond = 0.1,code = "2131",message = "超过了、、、、、")
+    @CommonRateLimit(permitsPerSecond = 0.2,code = "2131",message = "超过了、、、、、")
     public String aopLimit(@PathVariable("rate") Double rate){
 
         log.info("==================name ============"+rate);

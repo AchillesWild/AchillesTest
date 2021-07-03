@@ -4,7 +4,8 @@ import com.achilles.wild.server.common.aop.exception.BizException;
 import com.achilles.wild.server.common.aop.limit.annotation.CommonRateLimit;
 import com.achilles.wild.server.model.response.code.BaseResultCode;
 import com.google.common.util.concurrent.RateLimiter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
@@ -18,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@Log4j2
-public class AuthorizationInterceptor implements HandlerInterceptor {
+@Slf4j
+public class RateLimitInterceptor implements HandlerInterceptor {
 
     private final Map<String, RateLimiter> rateLimiterMap = new HashMap<>();
 
@@ -46,11 +47,22 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod method = (HandlerMethod) handler;
         String path = method.getBeanType().getName() + "#" + method.getMethod().getName();
-        CommonRateLimit commonRateLimit = method.getMethodAnnotation(CommonRateLimit.class);
+        CommonRateLimit annotation = method.getMethodAnnotation(CommonRateLimit.class);
         String key;
         Double rate;
-        if (commonRateLimit != null){
-            double permitsPerSecond = commonRateLimit.permitsPerSecond();
+        String code = BaseResultCode.REQUESTS_TOO_FREQUENT.code;
+        String message = BaseResultCode.REQUESTS_TOO_FREQUENT.message;
+        if (annotation != null){
+            double permitsPerSecond = annotation.permitsPerSecond();
+            if (permitsPerSecond <= 0) {
+                throw new BizException(BaseResultCode.ILLEGAL_PARAM);
+            }
+            if (StringUtils.isNotBlank(annotation.code())) {
+                code = annotation.code();
+            }
+            if (StringUtils.isNotBlank(annotation.message())) {
+                message = annotation.message();
+            }
             key = path + "_" + permitsPerSecond;
             rate = permitsPerSecond;
         } else {
@@ -68,7 +80,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             }
         }
         if (!rateLimiter.tryAcquire()) {
-            throw new BizException(BaseResultCode.REQUESTS_TOO_FREQUENT.code,BaseResultCode.REQUESTS_TOO_FREQUENT.message);
+            throw new BizException(code,message);
         }
 
         return true;
@@ -76,20 +88,12 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
-        int status = response.getStatus();
-        log.debug("-------------------------status : {}",status);
-
-
-//        if(status == 404){
-//            modelAndView.setViewName("/error/404");
-//        }
-
+        log.debug("-----------postHandle--------status : {}",response.getStatus());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
+        log.debug("-----------afterCompletion---------------");
     }
 
 }

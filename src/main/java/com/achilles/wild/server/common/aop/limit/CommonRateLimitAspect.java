@@ -13,14 +13,12 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
-@Aspect
-@Component
-@Order(0)
+//@Aspect
+//@Component
+//@Order(0)
 @Slf4j
 public class CommonRateLimitAspect {
 
