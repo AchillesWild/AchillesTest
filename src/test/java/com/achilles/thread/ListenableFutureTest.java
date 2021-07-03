@@ -1,8 +1,10 @@
 package com.achilles.thread;
 
+import com.achilles.wild.server.tool.generate.unique.GenerateUniqueUtil;
 import com.google.common.util.concurrent.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 @Slf4j
@@ -10,14 +12,15 @@ public class ListenableFutureTest {
 
     static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-        ListenableFuture<String> task = service.submit(() -> {
+        ListenableFuture<String> future = service.submit(() -> {
+            log.info("submit ---------------- ");
             Thread.sleep(2000l);
-            return "Achilles _" + System.currentTimeMillis();
+            return GenerateUniqueUtil.getUuId();
         });
 
-        Futures.addCallback(task,new FutureCallback<String>() {
+        Futures.addCallback(future,new FutureCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
@@ -31,7 +34,28 @@ public class ListenableFutureTest {
             }
         },MoreExecutors.newDirectExecutorService());
 
-//        Thread.sleep(2000l);
-        log.info("main -----------------");
+        ListenableFuture<String> future2 = service.submit(() -> {
+            log.info("submit -----2----------- ");
+            Thread.sleep(2000l);
+            return GenerateUniqueUtil.getUuId();
+        });
+
+        Futures.addCallback(future2,new FutureCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+
+                log.info("success 2 result  : " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                log.error("onFailure 2 : " +e.getMessage());
+            }
+        },MoreExecutors.newDirectExecutorService());
+
+
+        log.info("main -----------------future : " + future.get());
+        log.info("main -----------------future2 : " + future2.get());
     }
 }
