@@ -70,10 +70,10 @@ public class RateLimitInterceptor implements HandlerInterceptor {
             if (permitsPerSecond <= 0) {
                 throw new BizException(BaseResultCode.ILLEGAL_PARAM);
             }
-            if (StringUtils.isNotBlank(annotation.code())) {
+            if (StringUtils.isNotEmpty(annotation.code())) {
                 code = annotation.code();
             }
-            if (StringUtils.isNotBlank(annotation.message())) {
+            if (StringUtils.isNotEmpty(annotation.message())) {
                 message = annotation.message();
             }
             key = path + "_" + permitsPerSecond;
