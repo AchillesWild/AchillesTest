@@ -7,13 +7,13 @@ public enum BaseResultCode implements Serializable {
     SUCCESS("1", "success"),
     FAIL("0", "fail"),
 
-    EXCEPTION("100", "server exception, msg:%s"),
-    ILLEGAL_PARAM("101", "illegal parameter: %s"),
-    ERROR("102", "unsuccessful call, msg:%s"),
-    MISSING_PARAMETER("103", "missing parameter: %s"),
-    SERVICE_UNAVAILABLE("105", "service unavailable: %s"),
-    DATA_NOT_EXISTS("106", "data not exists: %s"),
-    DATA_HAS_EXISTS("107", "data has exists: %s"),
+    EXCEPTION("100", "server exception"),
+    ILLEGAL_PARAM("101", "illegal parameter"),
+    ERROR("102", "unsuccessful call, msg"),
+    MISSING_PARAMETER("103", "missing parameter"),
+    SERVICE_UNAVAILABLE("105", "service unavailable"),
+    DATA_NOT_EXISTS("106", "data not exists"),
+    DATA_HAS_EXISTS("107", "data has exists"),
 
     NOT_LOGIN("300", "NOT LOGIN ~"),
 
@@ -21,10 +21,10 @@ public enum BaseResultCode implements Serializable {
     NOT_FOUND("404", "404 !"),
 
 
-    EXCEPTION_TO_CLIENT("1000", "the server is too busy ~ : %s"),
-    ERROR_TO_CLIENT("1001", "the server is asleep ~ : %s"),
-    TOO_MANY_REQUESTS("2001", "too many requests ~ : %s"),
-    REQUESTS_TOO_FREQUENT("2002", "requests are too frequent ~ : %s"),
+    EXCEPTION_TO_CLIENT("1000", "the server is too busy ~"),
+    ERROR_TO_CLIENT("1001", "the server is asleep ~"),
+    TOO_MANY_REQUESTS("2001", "too many requests ~"),
+    REQUESTS_TOO_FREQUENT("2002", "requests are too frequent ~"),
     TRACE_ID_NECESSARY("2003", "traceId is necessary"),
     TRACE_ID_LENGTH_ILLEGAL("2004", "traceId length is 20-64"),
     TRACE_ID_CONTENT_ILLEGAL("2005", "traceId must contain letter and number both ~"),

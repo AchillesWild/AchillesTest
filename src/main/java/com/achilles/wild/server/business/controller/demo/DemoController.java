@@ -1,6 +1,7 @@
 package com.achilles.wild.server.business.controller.demo;
 
 import com.achilles.wild.server.business.controller.service.DemoService;
+import com.achilles.wild.server.common.aop.limit.annotation.IgnoreRateLimit;
 import com.achilles.wild.server.common.listener.event.MyApplicationEvent;
 import com.achilles.wild.server.model.response.BaseResult;
 import lombok.extern.log4j.Log4j2;
@@ -37,6 +38,7 @@ public class DemoController {
     DemoService demoService;
 
     @GetMapping(path = "/check/heartbeat")
+    @IgnoreRateLimit
 //    @CommonQpsLimit(permitsPerSecond = 0.2,code = "0",message = "checkHeartBeat too much")
     public String checkHeartBeat(){
         return "Everything is fine !";

@@ -26,7 +26,7 @@ public class FlowController {
     String str = "";
 
     @GetMapping(path = "/limit/aop/{rate}")
-    @CommonRateLimit(permitsPerSecond = 0.2,code = "2131",message = "超过了、、、、、")
+    @CommonRateLimit(permitsPerSecond = 1,code = "2131",message = "超过了、、、、、")
     public String aopLimit(@PathVariable("rate") Double rate){
 
         log.info("==================name ============"+rate);
