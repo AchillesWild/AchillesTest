@@ -25,16 +25,11 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     private final Map<String, RateLimiter> rateLimiterMap = new HashMap<>();
 
-//    private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
-
     @Value("${open.rate.limit:true}")
     Boolean openRateLimit;
 
     @Value("${default.limit.rate:10000}")
     Double defaultRateLimit;
-
-//    @Value("#{'${rate.limit.filter.exclude-urls:}'.split(',')}")
-//    List<String> rateLimitFilterExcludeUrls;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
