@@ -11,11 +11,20 @@ import java.util.Base64;
 
 public class FileUtil {
 
-    static String srcPath = "C:\\Users\\Achilles\\Desktop\\photo\\4854.jpg";
+//    static String srcPath = "C:\\Users\\Achilles\\Desktop\\photo\\4854.jpg";
+//    static String srcPath = "/doc/44.jpg";
     static String destPath = "C:\\Users\\Achilles\\Desktop\\test1.jpg";
 
-    public static void main(String[] args) {
-//        copyFile("C:\\Users\\Achilles\\Desktop\\z.jpg","C:\\Users\\Achilles\\Desktop\\z3453.jpg");
+
+    private void dd(){
+//        java.net.URL uri = FileUtil.getClass().getResource("/");
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        String srcPath = Thread.currentThread().getContextClassLoader().getResource("file/44.jpg").getPath();
+//        String srcPath = ResourceUtils.getFile("classpath:file/44.jpg").getPath();
+
 
         //readAndWrite("C:\\Users\\Achilles\\Desktop\\z.jpg","C:\\Users\\Achilles\\Desktop\\66.jpg");
         //String base64 = toBase64("C:\\Users\\Achilles\\Desktop\\z.jpg");

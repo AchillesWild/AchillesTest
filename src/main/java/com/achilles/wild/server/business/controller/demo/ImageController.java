@@ -34,8 +34,10 @@ public class ImageController {
     @GetMapping(value = "/getImage")
     public void getImage(String localPth) throws IOException {
 
+        String srcPath = Thread.currentThread().getContextClassLoader().getResource("file/44.jpg").getPath();
+
         try (
-            FileInputStream inputStream = new FileInputStream("C:\\Users\\Achilles\\Desktop\\photo\\44.jpg");
+            FileInputStream inputStream = new FileInputStream(srcPath);
             OutputStream outputStream =response.getOutputStream();
           ){
             BufferedImage image = ImageIO.read(inputStream);

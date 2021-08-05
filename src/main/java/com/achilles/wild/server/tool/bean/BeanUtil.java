@@ -1,6 +1,5 @@
 package com.achilles.wild.server.tool.bean;
 
-import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import jodd.util.Base64;
 import org.apache.spark.util.SizeEstimator;
 import org.springframework.beans.BeanWrapper;
@@ -445,7 +444,7 @@ public class BeanUtil {
 //        user.setPassword("232");
 //        System.out.println(getBeanVal(user,null));;
 
-		System.out.println(ObjectSizeCalculator.getObjectSize(new Base64[9]));
+//		System.out.println(ObjectSizeCalculator.getObjectSize(new Base64[9]));
 		System.out.println(SizeEstimator.estimate(new Base64[9]));
     }
 
@@ -457,8 +456,9 @@ public class BeanUtil {
 	 * @return
 	 */
 	public static long getObjectSize(Object obj){
-		return ObjectSizeCalculator.getObjectSize(obj);
+//		return ObjectSizeCalculator.getObjectSize(obj);
 //		return SizeEstimator.estimate(obj);
+		return 0;
 	}
 
 }
